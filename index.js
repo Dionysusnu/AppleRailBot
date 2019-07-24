@@ -112,30 +112,29 @@ client.on('message', message => {
 	// log all messages received, except if sent by the bot.
 	if (!message.author.equals(client.user)) {
 		// console.log(message.author.id + ' ' + message.author.username + ' @ ' + message.guild.id + ' ' + message.guild.name + ': ' + message.content);
-	}
-	else {
+	} else {
 		// if author is bot return
 		return;
-    }
+	}
 	// if new guild, no prefix set, set to !
 	// now done by botjoinedguild.js
 	// if (!db.get(`prefix.${message.guild.id}`)) db.set(`prefix.${message.guild.id}`, '!');
 	// console.log(db.get(`prefix.${message.guild.id}`));
 	// message is not a command?
-    // find guildmember
+	// find guildmember
 	const clientguildmember = message.guild.members.find(guildMember => guildMember.id === client.user.id);
 	let prefix = db.get(`prefix.${message.guild.id}`);
 	if (!prefix) {
 		prefix = '!';
 	}
-    if (!message.content.startsWith(prefix) || message.mentions.members.first() == clientguildmember) return;
-    // console.log(Clientguildmember);
+	if (!message.content.startsWith(prefix) || message.mentions.members.first() == clientguildmember) return;
+	// console.log(Clientguildmember);
 	// slice removes prefix, trim removes spaces in front and behind, then split on space(s) using regex
-    const args = message.content.slice(prefix.length).trim().split(/ +/g);
-    // get command from arguments
+	const args = message.content.slice(prefix.length).trim().split(/ +/g);
+	// get command from arguments
 	const commandName = args.shift().toLowerCase();
 	console.log('command \'' + commandName + '\' with args: ');
-    console.log(args);
+	console.log(args);
 
 	// console.log(client.commands.get('help'));
 	const command = client.commands.get(commandName)
@@ -161,14 +160,14 @@ client.on('message', message => {
 
 		return message.channel.send(reply);
 	}
-
-	try {
-		command.execute(message, args, db);
-	}
-	catch (error) {
+	command.execute(message, args, db).catch(error => {
 		console.error(error);
-		message.reply('there was an error trying to execute that command!');
-	}
+		if (message.author.id == process.env.OWNER_ID) {
+			message.send('Error:\n' + error);
+		} else {
+			message.reply('there was an error trying to execute that command!');
+		}
+	});
 });
 
 // Create an event listener for new guild members
