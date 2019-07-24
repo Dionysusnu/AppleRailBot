@@ -1,12 +1,11 @@
 const { RichEmbed } = require('discord.js');
-const auth = require('../private/auth.json');
 
 module.exports = {
 	name: 'reboot',
 	description: 'Bot owner only',
 	execute(message, args, db) {
         // only if message sent by bot owner
-		if(message.author.id === auth.ownerID) {
+		if(message.author.id === process.env.OWNER_ID) {
 			const embed = new RichEmbed()
 				.setTitle('Rebooting')
 				.setImage('https://media1.tenor.com/images/498143fe99695d987094763d6ba207cc/tenor.gif?itemid=4770991');

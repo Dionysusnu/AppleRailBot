@@ -1,11 +1,6 @@
 const { Client, Collection, RichEmbed, Emoji, MessageReaction } = require('discord.js');
 const client = new Client();
-const auth = require('./private/auth.json');
-// var data = require('./data.json');//below
 const fs = require('fs');
-// var fileName = './data.json';
-// const data = require('./data.json');
-// const restart = require('./nodemonrestart.json');
 const db = require('quick.db');
 
 client.commands = new Collection();
@@ -65,7 +60,7 @@ client.on('ready', () => {
 
 // start - messageReaction
 client.on('raw', async event => {
-	if (!events.hasOwnProperty(event.t)) return;
+	if (!Object.prototype.hasOwnProperty.call(events, event.t)) return;
 	// console.log('raw event');
 
 	const { d: data } = event;
@@ -214,4 +209,4 @@ client.on('error', error => {
 	console.error(error.message);
 });
 
-client.login(auth.token);
+client.login(process.env.AUTH_TOKEN);

@@ -1,25 +1,27 @@
 {
-    "name": "mybot",
-    "version": "1.0.0",
-    "description": "test bot",
-    "main": "index.js",
-    "author": "Dionysusnu",
-    "dependencies": {
-        "discord.js": "^11.4.2",
-        "eslint": "^5.15.1",
-        "quick.db": "^7.0.0-b22",
-        "quickdb": "^1.0.5",
-        "uuid": "^3.3.2"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Dionysusnu/DiscordBot.git"
-    },
-    "nodemonConfig": {
-        "delay": "1000",
-        "events": {
-            "exit": ""
-        }
-    }
+  "name": "applerailbot",
+  "version": "1.0.0",
+  "description": "Apple Rail Bot",
+  "main": "index.js",
+  "author": "Dionysusnu",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "quick.db": "^7.0.0-b22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dionysusnu/DiscordBot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Dionysusnu/DiscordBot/issues"
+  },
+  "homepage": "https://github.com/Dionysusnu/DiscordBot#readme",
+  "devDependencies": {
+      
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm install -s --only=production"
+  },
+  "license": "GPL-3.0-or-later"
 }
-
