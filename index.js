@@ -122,12 +122,16 @@ client.on('message', message => {
 	// if (!db.get(`prefix.${message.guild.id}`)) db.set(`prefix.${message.guild.id}`, '!');
 	// console.log(db.get(`prefix.${message.guild.id}`));
 	// message is not a command?
-    if (!message.content.startsWith(db.get(`prefix.${message.guild.id}`))) return;
     // find guildmember
 	const clientguildmember = message.guild.members.find(guildMember => guildMember.id === client.user.id);
+	let prefix = db.get(`prefix.${message.guild.id}`);
+	if (!prefix) {
+		prefix = '!';
+	}
+    if (!message.content.startsWith(prefix) || message.mentions.members.first() == clientguildmember) return;
     // console.log(Clientguildmember);
-    // slice removes prefix, trim removes spaces in front and behind, then split on space(s) using regex
-    const args = message.content.slice(db.get(`prefix.${message.guild.id}`).length).trim().split(/ +/g);
+	// slice removes prefix, trim removes spaces in front and behind, then split on space(s) using regex
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
     // get command from arguments
 	const commandName = args.shift().toLowerCase();
 	console.log('command \'' + commandName + '\' with args: ');
