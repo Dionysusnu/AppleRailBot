@@ -16,9 +16,6 @@
     "url": "https://github.com/Dionysusnu/DiscordBot/issues"
   },
   "homepage": "https://github.com/Dionysusnu/DiscordBot#readme",
-  "devDependencies": {
-    "pm2": "^3.5.1"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm install -s --only=production"
