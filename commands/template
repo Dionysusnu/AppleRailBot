@@ -1,0 +1,12 @@
+module.exports = {
+	name: 'template',
+	description: 'standard for new commands',
+	guildOnly: true,
+	args: true,
+	cooldown: 5,
+	cannotDisable: true,
+	aliases: ['temp'],
+	execute(message, args, db) {
+		
+    },
+};
