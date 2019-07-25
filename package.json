@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Dionysusnu/DiscordBot#readme",
   "scripts": {
-    "test": "node index.js"
+    "start": "node index.js"
   },
   "license": "GPL-3.0-or-later"
 }
