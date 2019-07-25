@@ -36,23 +36,50 @@ function saveFile(file) {
 }
 */
 
-let dbchannel, dbembed;
+let dbchannel, dbmessage;
 
 client.on('ready', () => {
 	const date = new Date(client.readyTimestamp);
 	console.log(date);
 	console.log(`Logged in as ${client.user.tag}!`);
 	dbchannel = client.channels.get(process.env.DATABASE_CHANNEL);
-	dbembed = dbchannel.messages.get(process.env.DATABASE_MESSAGE).embeds.first();
+	dbmessage = dbchannel.messages.get(process.env.DATABASE_MESSAGE);
+});
+
+const kue = require('kue'),
+	jobs = kue.createQueue();
+
+jobs.process('dbset', async function(job, done) {
+	/* carry out all the job function here */
+	const dbkey = job.data.dbkey;
+	const value = job.data.value;
+	let foundfield = false;
+	for (const field in dbmessage.embeds.first().fields) {
+		if (field.name == dbkey) {
+			field.value = value;
+			foundfield = true;
+			break;
+		}
+	}
+	const embed = new RichEmbed(dbmessage.embeds.first());
+	if (!foundfield) {
+		embed.addField(dbkey, value);
+	}
+	await dbmessage.edit('', embed);
+	done && done();
 });
 
 const db = {
-	set: async function(key, value) {
-
+	set: async function(dbkey, value) {
+		const job = jobs.create('new job', {
+			dbkey: dbkey,
+			value: value,
+		});
+		job.save();
 	},
-	get: async function(key) {
-		for (const field in dbembed.fields) {
-			if (field.name == key) {
+	get: function(dbkey) {
+		for (const field in dbmessage.embeds.first().fields) {
+			if (field.name == dbkey) {
 				return field.value;
 			}
 		}
