@@ -88,7 +88,7 @@ module.exports = {
 				const channels = message.guild.channels;
 				for (const [, ch] of channels) {
 					/* eslint-disable no-empty-function */
-					const fetched = await ch.fetchMessage(args[2]).catch(() => {});
+					const fetched = ch.type == 'text' && await ch.fetchMessage(args[2]).catch(() => {});
 					/* eslint-enable no-empty-function */
 					if (fetched) {
 						db.set(`welcomemessage.${message.guild.id}`, fetched.content);
