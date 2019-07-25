@@ -201,12 +201,6 @@ client.on('messageReactionRemove', (messageReaction, user) => {
 	command.execute(messageReaction, user, db);
 });
 
-client.on('guildCreate', guild => {
-	const command = client.othercommands.get('botjoinedguild');
-	// console.log(command);
-	command.execute(guild, db);
-});
-
 client.on('error', error => {
 	console.error(new Date() + ': error');
 	console.error(error.message);
