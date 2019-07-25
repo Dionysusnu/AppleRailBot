@@ -6,6 +6,7 @@
   "author": "Dionysusnu",
   "dependencies": {
     "discord.js": "^11.4.2",
+    "express": "^4.17.1",
     "quick.db": "^7.0.0-b22"
   },
   "repository": {
