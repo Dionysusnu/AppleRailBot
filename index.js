@@ -1,7 +1,7 @@
 const { Client, Collection, RichEmbed, Emoji, MessageReaction } = require('discord.js');
 const client = new Client();
 const fs = require('fs');
-const db = require('quick.db');
+// const db = require('quick.db');
 
 client.commands = new Collection();
 client.othercommands = new Collection();
@@ -36,26 +36,28 @@ function saveFile(file) {
 }
 */
 
+let dbchannel, dbembed;
+
 client.on('ready', () => {
 	const date = new Date(client.readyTimestamp);
 	console.log(date);
 	console.log(`Logged in as ${client.user.tag}!`);
-	if (db.get('restart.restarting')) {
-		// console.log(client.channels);
-		const restartchannel = client.channels.find(ch => ch.id === db.get('restart.channel'));
-		db.set('restart.restarting', false);
-		// console.log(restartchannel);
-		restartchannel.fetchMessage(db.get('restart.message'))
-			.then(msg => {
-				// const date2 = new Date();
-				// console.log(db.get('restart.timestamp'));
-				const embed = new RichEmbed()
-					.setTitle('✅ Rebooted, ' + (parseInt(date.getTime()) - parseInt(db.get('restart.timestamp'))) + 'ms');
-				msg.edit('', embed);
-			});
-		// console.log(restartmessage);
-	}
+	dbchannel = client.channels.get(process.env.DATABASE_CHANNEL);
+	const embed = new RichEmbed().setTitle('Database');
+	dbembed = dbchannel.send('', embed);
 });
+
+const db = {
+	set: async function(key, value) {
+
+	},
+	get: async function(key) {
+		for (const field in dbembed.fields) {
+			
+		}
+
+	},
+};
 
 
 // start - messageReaction
