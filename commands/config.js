@@ -85,22 +85,14 @@ module.exports = {
 				// let messagefetched;
 				const prefix = db.get(`prefix.${message.guild.id}`);
 				if (!args[2]) return message.channel.send(`Usage: **${prefix}config welcomemessage id <id of the message>**`);
-				const channels = message.client.channels;
-				console.log('Starting for loop');
-				// console.log(message.client.channels);
-				for (const ch of channels) {
-					// console.log(ch);
-					if (ch[1].type !== 'text') {
-						console.log(ch[1].type);
-						continue;
+				const channels = message.guild.channels;
+				for (const [, ch] of channels) {
+					const fetched = await ch[1].fetchMessage(args[2]);
+					if (fetched) {
+						db.set(`welcomemessage.${message.guild.id}`, fetched.content);
+						const welcomemessageformatted = fetched.content.replace(regex, `${message.author}`);
+						return message.channel.send('Welcome message set succesfully, here\'s an example:\n' + welcomemessageformatted);
 					}
-					// console.log(ch[1].type);
-					ch[1].fetchMessage(args[2])
-						.then(messagefetched => {
-							db.set(`welcomemessage.${message.guild.id}`, messagefetched.content);
-							const welcomemessageformatted = messagefetched.content.replace(regex, `${message.author}`);
-							return message.channel.send('Welcome message set succesfully, here\'s an example:\n' + welcomemessageformatted);
-						}).catch();
 				}
 				// console.log('For loop ended');
 				break;
