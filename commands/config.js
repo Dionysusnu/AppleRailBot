@@ -87,7 +87,7 @@ module.exports = {
 				if (!args[2]) return message.channel.send(`Usage: **${prefix}config welcomemessage id <id of the message>**`);
 				const channels = message.guild.channels;
 				for (const [, ch] of channels) {
-					const fetched = await ch.fetchMessage(args[2]);
+					const fetched = await ch.fetchMessage(args[2]).catch(null);
 					if (fetched) {
 						db.set(`welcomemessage.${message.guild.id}`, fetched.content);
 						const welcomemessageformatted = fetched.content.replace(regex, `${message.author}`);
