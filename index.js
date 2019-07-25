@@ -38,14 +38,12 @@ function saveFile(file) {
 
 let dbchannel, dbmessage, editpromise;
 
-client.on('ready', () => {
+client.on('ready', async () => {
 	const date = new Date(client.readyTimestamp);
 	console.log(date);
 	console.log(`Logged in as ${client.user.tag}!`);
 	dbchannel = client.channels.get(process.env.DATABASE_CHANNEL);
-	dbmessage = dbchannel.messages.get(process.env.DATABASE_MESSAGE);
-	console.log(dbchannel);
-	console.log(dbmessage);
+	dbmessage = await dbchannel.fetchMessage(process.env.DATABASE_MESSAGE);
 });
 
 const db = {
