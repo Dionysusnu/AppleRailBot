@@ -44,6 +44,7 @@ client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 	dbchannel = client.channels.get(process.env.DATABASE_CHANNEL);
 	dbmessage = dbchannel.messages.get(process.env.DATABASE_MESSAGE);
+	console.log(dbchannel);
 	console.log(dbmessage);
 });
 
