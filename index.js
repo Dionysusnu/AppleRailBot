@@ -63,11 +63,9 @@ const db = {
 		if (!foundfield) {
 			embed.addField(dbkey, value);
 		}
-		/* eslint-disable require-atomic-updates */
 		editpromise = dbmessage.edit('', embed);
 		await editpromise;
 		editpromise = null;
-		/* eslint-enable require-atomic-updates */
 	},
 	get: function(dbkey) {
 		for (const field in dbmessage.embeds[0].fields) {
@@ -76,6 +74,16 @@ const db = {
 			}
 		}
 
+	},
+	delete: async function(dbkey) {
+		if (editpromise) {
+			await editpromise;
+		}
+		const embed = new RichEmbed(dbmessage.embeds[0]);
+		embed.fields = embed.fields.filter(field => field.name != dbkey);
+		editpromise = dbmessage.edit('', embed);
+		await editpromise;
+		editpromise = null;
 	},
 };
 
