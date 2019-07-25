@@ -12,14 +12,10 @@ module.exports = {
 		if (!(parseInt(args[0]) || (args[0]) === 'all')) return message.channel.send('Please enter a valid number between 1 and 99');
 		if (args[0] === 'all') {
 			let messagesleft = true;
-			let count = 0;
+			let messages = await message.channel.fetchMessages({ limit: 100 });
 			while (messagesleft) {
-				count += 1;
-				console.log(count);
-				message.channel.fetchMessages({ limit: 100 }).then(messages => {
-					message.channel.bulkDelete(messages, true);
-				});
-				const messages = await message.channel.fetchMessages({ limit: 100 });
+				await message.channel.bulkDelete(messages, true);
+				messages = await message.channel.fetchMessages({ limit: 100 });
 				if (messages.size) {
 					messagesleft = true;
 				} else {
@@ -28,9 +24,15 @@ module.exports = {
 				}
 			}
 		} else {
-			const amountToDelete = parseInt(args[0]) + 1;
-			for (let i = 0; i < amountToDelete % 100; i++) {
-				message.channel.bulkDelete(amountToDelete, true);
+			let amountToDelete = parseInt(args[0]) + 1;
+			while (amountToDelete) {
+				if (amountToDelete >= 100) {
+					message.channel.bulkDelete(100, true);
+					amountToDelete -= 100;
+				} else {
+					message.channel.bulkDelete(amountToDelete, true);
+					amountToDelete = 0;
+				}
 			}
 		}
 	},
