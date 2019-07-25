@@ -153,7 +153,7 @@ client.on('message', message => {
 	// message is not a command?
 	// find guildmember
 	const clientguildmember = message.guild.members.find(guildMember => guildMember.id === client.user.id);
-	let prefix = db.get(`prefix.${message.guild.id}`);
+	let prefix = db.get('prefix');
 	if (!prefix) {
 		prefix = '!';
 	}
@@ -185,7 +185,7 @@ client.on('message', message => {
 		let reply = `You didn't provide any arguments, ${message.author}!`;
 
 		if (command.usage) {
-			reply += `\nThe proper usage would be: **${db.get(`prefix.${message.guild.id}`)}${command.name} ${command.usage}**`;
+			reply += `\nThe proper usage would be: **${db.get('prefix')}${command.name} ${command.usage}**`;
 		}
 
 		return message.channel.send(reply);
