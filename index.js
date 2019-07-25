@@ -43,8 +43,7 @@ client.on('ready', () => {
 	console.log(date);
 	console.log(`Logged in as ${client.user.tag}!`);
 	dbchannel = client.channels.get(process.env.DATABASE_CHANNEL);
-	const embed = new RichEmbed().setTitle('Database');
-	dbembed = dbchannel.send('', embed);
+	dbembed = dbchannel.messages.get(process.env.DATABASE_MESSAGE).embeds.first();
 });
 
 const db = {
@@ -53,7 +52,9 @@ const db = {
 	},
 	get: async function(key) {
 		for (const field in dbembed.fields) {
-			
+			if (field.name == key) {
+				return field.value;
+			}
 		}
 
 	},
