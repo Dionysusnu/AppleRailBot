@@ -52,14 +52,14 @@ const db = {
 			await editpromise;
 		}
 		let foundfield = false;
-		for (const field in dbmessage.embeds.first().fields) {
+		for (const field in dbmessage.embeds[0].fields) {
 			if (field.name == dbkey) {
 				field.value = value;
 				foundfield = true;
 				break;
 			}
 		}
-		const embed = new RichEmbed(dbmessage.embeds.first());
+		const embed = new RichEmbed(dbmessage.embeds[0]);
 		if (!foundfield) {
 			embed.addField(dbkey, value);
 		}
@@ -70,7 +70,7 @@ const db = {
 		/* eslint-enable require-atomic-updates */
 	},
 	get: function(dbkey) {
-		for (const field in dbmessage.embeds.first().fields) {
+		for (const field in dbmessage.embeds[0].fields) {
 			if (field.name == dbkey) {
 				return field.value;
 			}
