@@ -193,7 +193,7 @@ client.on('message', message => {
 	command.execute(message, args, db).catch(error => {
 		console.error(error);
 		if (message.author.id == process.env.OWNER_ID) {
-			message.send('Error:```js ' + error + ' ```');
+			message.channel.send('Error:```js ' + error + ' ```');
 		} else {
 			message.reply('there was an error trying to execute that command!');
 		}
