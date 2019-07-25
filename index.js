@@ -213,3 +213,12 @@ client.on('error', error => {
 });
 
 client.login(process.env.AUTH_TOKEN);
+
+const express = require('express');
+const app = express();
+
+const port = process.env.PORT || 8080,
+	ip = process.env.IP || '0.0.0.0';
+
+app.listen(port, ip);
+console.log('App listening on http://%s:%s', ip, port);
