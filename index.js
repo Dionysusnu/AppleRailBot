@@ -36,7 +36,7 @@ function saveFile(file) {
 }
 */
 
-let dbchannel, dbmessage;
+let dbchannel, dbmessage, editpromise;
 
 client.on('ready', () => {
 	const date = new Date(client.readyTimestamp);
@@ -46,36 +46,28 @@ client.on('ready', () => {
 	dbmessage = dbchannel.messages.get(process.env.DATABASE_MESSAGE);
 });
 
-const kue = require('kue'),
-	jobs = kue.createQueue();
-
-jobs.process('dbset', async function(job, done) {
-	/* carry out all the job function here */
-	const dbkey = job.data.dbkey;
-	const value = job.data.value;
-	let foundfield = false;
-	for (const field in dbmessage.embeds.first().fields) {
-		if (field.name == dbkey) {
-			field.value = value;
-			foundfield = true;
-			break;
-		}
-	}
-	const embed = new RichEmbed(dbmessage.embeds.first());
-	if (!foundfield) {
-		embed.addField(dbkey, value);
-	}
-	await dbmessage.edit('', embed);
-	done && done();
-});
-
 const db = {
 	set: async function(dbkey, value) {
-		const job = jobs.create('new job', {
-			dbkey: dbkey,
-			value: value,
-		});
-		job.save();
+		if (editpromise) {
+			await editpromise;
+		}
+		let foundfield = false;
+		for (const field in dbmessage.embeds.first().fields) {
+			if (field.name == dbkey) {
+				field.value = value;
+				foundfield = true;
+				break;
+			}
+		}
+		const embed = new RichEmbed(dbmessage.embeds.first());
+		if (!foundfield) {
+			embed.addField(dbkey, value);
+		}
+		/* eslint-disable require-atomic-updates */
+		editpromise = dbmessage.edit('', embed);
+		await editpromise;
+		editpromise = null;
+		/* eslint-enable require-atomic-updates */
 	},
 	get: function(dbkey) {
 		for (const field in dbmessage.embeds.first().fields) {
