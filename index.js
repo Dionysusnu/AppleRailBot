@@ -243,9 +243,6 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
-const port = process.env.PORT || 8080,
-	ip = process.env.IP || '0.0.0.0';
-
 app.post('/', (req, res) => {
 	axios({
 		url: req.body.url,
@@ -253,5 +250,9 @@ app.post('/', (req, res) => {
 	});
 	res.end();
 });
+
+const port = process.env.PORT || 8080,
+	ip = process.env.IP || '0.0.0.0';
+
 app.listen(port, ip);
 console.log('App listening on http://%s:%s', ip, port);
