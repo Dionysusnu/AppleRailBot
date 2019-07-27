@@ -68,6 +68,9 @@ const db = {
 		editpromise = null;
 	},
 	get: function(dbkey) {
+		if (!dbmessage) {
+			return null;
+		}
 		// console.log(dbmessage.embeds[0]);
 		for (const field of dbmessage.embeds[0].fields) {
 			// console.log('comparing ' + field.name + ' to ' + dbkey);
