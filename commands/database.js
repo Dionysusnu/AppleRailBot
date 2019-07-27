@@ -1,3 +1,5 @@
+const { RichEmbed } = require('discord.js');
+
 module.exports = {
 	name: 'database',
 	description: 'bot owner only',
@@ -24,6 +26,9 @@ module.exports = {
 			db.delete(args[1]);
 			message.reply('done!');
 			break;
+		}
+		case 'create': {
+			message.channel.send('', new RichEmbed().setTitle('Database'));
 		}
 		}
 	},
