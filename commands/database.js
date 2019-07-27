@@ -17,7 +17,7 @@ module.exports = {
 			break;
 		}
 		case 'get': {
-			message.reply(db.get(args[1]));
+			message.reply(await db.get(args[1]));
 			break;
 		}
 		case 'delete': {
