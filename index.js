@@ -52,7 +52,7 @@ const db = {
 			await editpromise;
 		}
 		let foundfield = false;
-		for (const field in dbmessage.embeds[0].fields) {
+		for (const field of dbmessage.embeds[0].fields) {
 			if (field.name == dbkey) {
 				field.value = value;
 				foundfield = true;
