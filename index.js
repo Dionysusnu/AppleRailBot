@@ -205,23 +205,14 @@ client.on('message', message => {
 	});
 });
 
-// Create an event listener for new guild members
+client.on('guildMemberRemove', guildmember => {
+	const command = client.othercommands.get('guildmemberleft');
+	command.execute(guildmember, db);
+});
+
 client.on('guildMemberAdd', guildmember => {
 	const command = client.othercommands.get('guildmemberadded');
 	command.execute(guildmember, db);
-	// Send the message to a designated channel on a server:
-	/* outdated
-	if (!db.get(`welcomechannel.${guildmember.guild.id}`)) db.set(`welcomechannel.${guildmember.guild.id}`, 'general');
-	// console.log(db.get(`welcomechannel.${guildmember.guild.id}`));
-	const channel = guildmember.guild.channels.find(ch => ch.name === db.get(`welcomechannel.${guildmember.guild.id}`)) || guildmember.guild.channels.find(ch => ch.id === db.get(`welcomechannel.${guildmember.guild.id}`));
-	// console.log(channel);
-	// Do nothing if the channel wasn't found on this server
-	if (!channel) return;
-	// Send the message, mentioning the member
-	const standardwelcomemessage = `Welcome to the server, ${guildmember}`;
-	// to do: COPY CODE FROM PREFIX
-	channel.send(db.get(`welcomemessage.${guildmember.guild.id}`) || standardwelcomemessage);
-	*/
 });
 
 client.on('messageReactionAdd', (messageReaction, user) => {

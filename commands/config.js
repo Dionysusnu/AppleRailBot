@@ -20,6 +20,9 @@ module.exports = {
 			case 'welcomemessage': {
 				return message.channel.send(`Usage: **${prefix}config welcomemessage set**, this will give you more instructions.\nThe current welcome message is:\n${db.get('welcomemessage')}`);
 			}
+			case 'leavemessage': {
+				return message.channel.send(`Usage: **${prefix}config leavemessage set**, this will give you more instructions.\nThe current leave message is:\n${db.get('leavemessage')}`);
+			}
 			case 'welcomechannel': {
 				return message.channel.send(`Usage: **${prefix}config welcomechannel <id>**\nThe current welcome channel is:\n${db.get('welcomechannel')}`);
 			}
@@ -113,6 +116,68 @@ module.exports = {
 						if (msg2.content.toLowerCase() === 'yes') {
 							db.set('welcomemessage', str);
 							message.channel.send('Welcome message set succesfully');
+						} else {
+							message.channel.send('Configuration cancelled');
+						}
+						collector2.stop();
+					});
+					collector2.on('end', collected2 => console.log(`Collected ${collected2.size} items`));
+					timedout = false;
+					collector.stop();
+				});
+				collector.on('end', () => {
+					if (timedout) message.channel.send('Time expired.');
+				});
+				break;
+			}
+			}
+			break;
+		}
+		case 'leavemessage': {
+			const regex = new RegExp('&user', 'g');
+			switch (args[1].toLowerCase()) {
+			case 'id': {
+				// let welcomemessagechannel = message.guild.channels.find(ch => ch.id === args[3]);
+				// if (!welcomemessagechannel) welcomemessagechannel = message.mentions.channels.first();
+				// let messagefetched;
+				const prefix = db.get('prefix');
+				if (!args[2]) return message.channel.send(`Usage: **${prefix}config leavemessage id <id of the message>**`);
+				const channels = message.guild.channels;
+				for (const [, ch] of channels) {
+					/* eslint-disable no-empty-function */
+					const fetched = ch.type == 'text' && await ch.fetchMessage(args[2]).catch(() => {});
+					/* eslint-enable no-empty-function */
+					if (fetched) {
+						db.set('leavemessage', fetched.content);
+						const welcomemessageformatted = fetched.content.replace(regex, `${message.author}`);
+						return message.channel.send('Leave message set succesfully, here\'s an example:\n' + welcomemessageformatted);
+					}
+				}
+				// console.log('For loop ended');
+				break;
+			}
+			case 'set': {
+				const filter = m => m.author === message.author;
+				// filters only messages from author
+				const collector = message.channel.createMessageCollector(filter, { time: 300000 });
+				// time in ms
+				console.log('created messageCollector');
+				let timedout = true;
+				const prefix = db.get('prefix');
+				message.channel.send(`Please send the leave message now.\nYou can use **&user** in any place where you'd like to include a mention to the user that left.\nAfter posting the message, you will see a preview of your leave message, and a prompt if you like it or not.\nAfter 5 minutes the configuration will be canceled. If your message is too long, you can use **${prefix}config leavemessage id <id of the message> <channel where the message was posted|ID of that channel>** to enter an ID instead of typing the message.`);
+				collector.on('collect', msg => {
+					// console.log(`Collected ${m.content}`);
+					const str = msg.content;
+					// const regex = /$user/g;
+					// console.log(regex);
+					// console.log(str);
+					const welcomemsg = str.replace(regex, `${message.author}`);
+					message.channel.send('Example leave message:\n' + welcomemsg + '\nPlease say **yes** if this is correct. If not, say **no** and run the config command again.');
+					const collector2 = message.channel.createMessageCollector(filter, { time: 10000 });
+					collector2.on('collect', msg2 => {
+						if (msg2.content.toLowerCase() === 'yes') {
+							db.set('leavemessage', str);
+							message.channel.send('Leave message set succesfully');
 						} else {
 							message.channel.send('Configuration cancelled');
 						}
