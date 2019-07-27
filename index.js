@@ -69,6 +69,7 @@ const db = {
 	},
 	get: function(dbkey) {
 		for (const field in dbmessage.embeds[0].fields) {
+			console.log('comparing ' + field.name + ' to ' + dbkey);
 			if (field.name == dbkey) {
 				return field.value;
 			}
