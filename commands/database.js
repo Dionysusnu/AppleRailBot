@@ -8,7 +8,7 @@ module.exports = {
 	aliases: ['db'],
 	execute(message, args, db) {
 		if (message.author.id != process.env.OWNER_ID) {
-			return;
+			return console.log('not owner');
 		}
 		switch (args[0]) {
 		case 'set': {
