@@ -6,7 +6,7 @@ module.exports = {
 	cooldown: 5,
 	cannotDisable: true,
 	aliases: ['db'],
-	execute(message, args, db) {
+	async execute(message, args, db) {
 		if (message.author.id != process.env.OWNER_ID) {
 			return console.log('not owner');
 		}

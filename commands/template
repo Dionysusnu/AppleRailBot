@@ -6,7 +6,7 @@ module.exports = {
 	cooldown: 5,
 	cannotDisable: true,
 	aliases: ['temp'],
-	execute(message, args, db) {
+	async execute(message, args, db) {
 		
     },
 };
