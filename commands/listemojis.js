@@ -6,13 +6,12 @@ module.exports = {
 	cooldown: 1,
 	cannotDisable: false,
 	aliases: ['lemojis', 'listem'],
-	execute(message, args) {
-        const emojiList = message.guild.emojis.map(e=>e.toString()).join(' ');
+	async execute(message, args) {
+		const emojiList = message.guild.emojis.map(e=>e.toString()).join(' ');
 		if (!emojiList) {
 			message.channel.send('This server has no custom emojis.');
-		}
-        else {
+		} else {
 			message.channel.send(emojiList);
 		}
-    },
+	},
 };
