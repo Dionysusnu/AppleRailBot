@@ -10,7 +10,7 @@ module.exports = {
 		const regex = new RegExp('&user', 'g');
 		// console.log(regex);
 		// console.log(str);
-		const welcomemsg = str.replace(regex, `${guildmember.user.tag} (id ${guildmember.id})`);
+		const welcomemsg = str.replace(regex, `@${guildmember.user.tag} (ID ${guildmember.id})`);
 		const welcomechannelid = db.get('welcomechannel');
 		// console.log(welcomechannelid);
 		const welcomechannel = guildmember.guild.channels.find(channel => channel.id === welcomechannelid);
