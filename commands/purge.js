@@ -11,18 +11,9 @@ module.exports = {
 		if (!clientguildmember.hasPermission('MANAGE_MESSAGES')) return message.channel.send('I don\'t have the manage messages permission!');
 		if (!(parseInt(args[0]) || (args[0]) === 'all')) return message.channel.send('Please enter a valid number between 1 and 99');
 		if (args[0] === 'all') {
-			let messagesleft = true;
-			let messages = await message.channel.fetchMessages({ limit: 100 });
-			while (messagesleft) {
-				await message.channel.bulkDelete(messages, true);
-				messages = await message.channel.fetchMessages({ limit: 100 });
-				if (messages.size) {
-					messagesleft = true;
-				} else {
-					messagesleft = false;
-					// console.log(messages);
-				}
-			}
+			const newchannel = await message.channel.clone(undefined, true, true, 'purged all');
+			message.channel.send(`Please move to ${newchannel}, this channel will be deleted`);
+			setTimeout(message.channel.delete, 3000, ['Purged']);
 		} else {
 			let amountToDelete = parseInt(args[0]) + 1;
 			while (amountToDelete) {
