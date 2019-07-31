@@ -12,6 +12,7 @@ module.exports = {
 		if (!(parseInt(args[0]) || (args[0]) === 'all')) return message.channel.send('Please enter a valid number between 1 and 99');
 		if (args[0] === 'all') {
 			const newchannel = await message.channel.clone(undefined, true, true, 'purged all');
+			newchannel.setParent(message.channel.parent);
 			message.channel.send(`Please move to ${newchannel}, this channel will be deleted`);
 			message.client.setTimeout(() => message.channel.delete('Purged'), 3000);
 		} else {
