@@ -13,7 +13,7 @@ module.exports = {
 		if (args[0] === 'all') {
 			const newchannel = await message.channel.clone(undefined, true, true, 'purged all');
 			message.channel.send(`Please move to ${newchannel}, this channel will be deleted`);
-			message.client.setTimeout(message.channel.delete, 3000, ['Purged']);
+			message.client.setTimeout(() => message.channel.delete('Purged'), 3000);
 		} else {
 			let amountToDelete = parseInt(args[0]) + 1;
 			while (amountToDelete) {
