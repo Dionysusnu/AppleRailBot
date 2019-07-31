@@ -14,7 +14,7 @@ module.exports = {
 			const newchannel = await message.channel.clone(undefined, true, true, 'purged all');
 			newchannel.setParent(message.channel.parent);
 			message.channel.send(`Please move to ${newchannel}, this channel will be deleted`);
-			message.client.setTimeout(() => message.channel.delete('Purged'), 3000);
+			message.client.setTimeout(() => message.channel.delete('Purged'), 10000);
 		} else {
 			let amountToDelete = parseInt(args[0]) + 1;
 			while (amountToDelete) {
