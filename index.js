@@ -25,7 +25,7 @@ const events = {
 	MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
 };
 
-// now using quickdb
+// now using quickdb, but actually a db message for easier hosting
 /*
 function saveFile(file) {
 	fs.writeFile(file.fileName, JSON.stringify(file, null, 2), function(err) {
@@ -233,22 +233,3 @@ client.on('error', error => {
 });
 
 client.login(process.env.AUTH_TOKEN);
-
-const axios = require('axios');
-const express = require('express');
-const app = express();
-app.use(express.json());
-
-app.post('/', (req, res) => {
-	axios({
-		url: req.body.url,
-		method: 'get',
-	});
-	res.end();
-});
-
-const port = process.env.PORT || 8080,
-	ip = process.env.IP || '0.0.0.0';
-
-app.listen(port, ip);
-console.log('App listening on http://%s:%s', ip, port);
