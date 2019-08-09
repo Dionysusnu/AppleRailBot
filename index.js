@@ -145,10 +145,7 @@ client.on('raw', async event => {
 
 client.on('message', message => {
 	// log all messages received, except if sent by the bot.
-	if (!message.author.equals(client.user)) {
-		// console.log(message.author.id + ' ' + message.author.username + ' @ ' + message.guild.id + ' ' + message.guild.name + ': ' + message.content);
-	} else {
-		// if author is bot return
+	if (message.author.equals(client.user) || !message.guild) {
 		return;
 	}
 	// if new guild, no prefix set, set to !
@@ -158,11 +155,8 @@ client.on('message', message => {
 	// message is not a command?
 	// find guildmember
 	const clientguildmember = message.guild.members.find(guildMember => guildMember.id === client.user.id);
-	let prefix = db.get('prefix');
-	if (!prefix) {
-		prefix = '!';
-	}
-	if (!message.content.startsWith(prefix) || message.mentions.members.first() == clientguildmember) return;
+	const prefix = db.get('prefix');
+	if (!(message.content.startsWith(prefix) || message.mentions.members.first() == clientguildmember)) return;
 	// console.log(Clientguildmember);
 	// slice removes prefix, trim removes spaces in front and behind, then split on space(s) using regex
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -178,10 +172,6 @@ client.on('message', message => {
 	if (!command) {
 		message.channel.send('Command not found');
 		return console.log('Command not found');
-	}
-
-	if (command.guildOnly && message.channel.type !== 'text') {
-		return message.reply('I can\'t execute that command inside DMs!');
 	}
 
 	if (command.args && !args.length) {
@@ -207,24 +197,24 @@ client.on('message', message => {
 
 client.on('guildMemberRemove', guildmember => {
 	const command = client.othercommands.get('guildmemberleft');
-	command.execute(guildmember, db);
+	command.execute(guildmember, db).catch(console.error);
 });
 
 client.on('guildMemberAdd', guildmember => {
 	const command = client.othercommands.get('guildmemberadded');
-	command.execute(guildmember, db);
+	command.execute(guildmember, db).catch(console.error);
 });
 
 client.on('messageReactionAdd', (messageReaction, user) => {
 	const command = client.othercommands.get('messagereactionadded');
 	// console.log(command);
-	command.execute(messageReaction, user, db);
+	command.execute(messageReaction, user, db).catch(console.error);
 });
 
 client.on('messageReactionRemove', (messageReaction, user) => {
 	const command = client.othercommands.get('messagereactionremoved');
 	// console.log(command);
-	command.execute(messageReaction, user, db);
+	command.execute(messageReaction, user, db).catch(console.error);
 });
 
 client.on('error', error => {

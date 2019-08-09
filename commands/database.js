@@ -14,7 +14,7 @@ module.exports = {
 		}
 		switch (args[0]) {
 		case 'set': {
-			db.set(args[1], args[2]);
+			db.set(args[1], args.slice(2, args.length).join(' '));
 			message.reply('done!');
 			break;
 		}
