@@ -8,8 +8,8 @@ module.exports = {
 	async execute(messageReaction, user, db) {
 		console.log(messageReaction);
 		if (!messageReaction.message.guild) return console.log('messagereactionadded not supported in DMs');
-		const guildmember = messageReaction.message.guild.members.find(member => member.id === user.id);
-		const clientguildmember = messageReaction.message.guild.members.find(member => member.id === user.client.id);
+		const guildmember = messageReaction.message.guild.members.get(user.id);
+		const clientguildmember = messageReaction.message.guild.members.get(user.client.user.id);
 		const trackedmessages = db.get('trackedmessages');
 		if(!trackedmessages.includes(messageReaction.message.id)) return console.log('Message does not seem to be tracked');
 		const trackedmessagereactions = db.get(`trackedmessages.${messageReaction.message.id}.reactions`);
