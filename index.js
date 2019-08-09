@@ -195,29 +195,29 @@ client.on('message', message => {
 	});
 });
 
-client.on('guildMemberRemove', guildmember => {
+client.on('guildMemberRemove', async guildmember => {
 	const command = client.othercommands.get('guildmemberleft');
 	command.execute(guildmember, db).catch(console.error);
 });
 
-client.on('guildMemberAdd', guildmember => {
+client.on('guildMemberAdd', async guildmember => {
 	const command = client.othercommands.get('guildmemberadded');
 	command.execute(guildmember, db).catch(console.error);
 });
 
-client.on('messageReactionAdd', (messageReaction, user) => {
+client.on('messageReactionAdd', async (messageReaction, user) => {
 	const command = client.othercommands.get('messagereactionadded');
 	// console.log(command);
 	command.execute(messageReaction, user, db).catch(console.error);
 });
 
-client.on('messageReactionRemove', (messageReaction, user) => {
+client.on('messageReactionRemove', async (messageReaction, user) => {
 	const command = client.othercommands.get('messagereactionremoved');
 	// console.log(command);
 	command.execute(messageReaction, user, db).catch(console.error);
 });
 
-client.on('error', error => {
+client.on('error', async error => {
 	console.error(new Date() + ': error');
 	console.error(error.message);
 });

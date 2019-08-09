@@ -5,7 +5,7 @@ module.exports = {
 	args: false,
 	cooldown: 0,
 	aliases: [''],
-	execute(messageReaction, user, db) {
+	async execute(messageReaction, user, db) {
 		console.log('messagereactionremoved');
-    },
+	},
 };
