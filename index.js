@@ -217,6 +217,12 @@ client.on('messageReactionRemove', async (messageReaction, user) => {
 	command.execute(messageReaction, user, db).catch(console.error);
 });
 
+client.on('messageDelete', async message => {
+	const command = client.othercommands.get('messagedeleted');
+	// console.log(command);
+	command.execute(message, db).catch(console.error);
+});
+
 client.on('error', async error => {
 	console.error(new Date() + ': error');
 	console.error(error.message);
