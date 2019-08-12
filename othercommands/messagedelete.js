@@ -10,9 +10,7 @@ module.exports = {
 	async execute(message, db) {
 		const embed = new RichEmbed();
 		embed.setTitle('Message deleted');
-		if (message.content != '') {
-			embed.addField(message.author.tag, message.content);
-		}
+		embed.addField(message.author.tag, message.content || 'No text');
 		embed.attachFiles(message.attachments.array());
 		message.guild.channels.get(process.env.DISCORD_LOGS_ID).send('', embed);
 	},
