@@ -11,7 +11,7 @@ module.exports = {
 		const embed = new RichEmbed();
 		embed.setTitle('Message deleted');
 		embed.addField(message.author.tag, message.content);
-		embed.attachFiles(message.attachments.array);
+		embed.attachFiles(message.attachments.array());
 		message.guild.channels.get(process.env.DISCORD_LOGS_ID).send('', embed);
 	},
 };
