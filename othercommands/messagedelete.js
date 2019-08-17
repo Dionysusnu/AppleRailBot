@@ -11,8 +11,9 @@ module.exports = {
 		const logs = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE', limit: 10 });
 		console.log(logs.entries);
 		const filtered = logs.entries.filter(log => log.target === message.author && log.extra.channel === message.channel).first();
+		console.log(filtered);
 		const embed = new RichEmbed();
-		embed.setTitle((filtered && filtered.avatarURL || message.author.avatarURL) + ' ' + (filtered && filtered.tag || message.author.tag));
+		embed.setTitle((filtered && filtered.executor.avatarURL || message.author.avatarURL) + ' ' + (filtered && filtered.executor.tag || message.author.tag));
 		embed.setDescription('**Message deleted**');
 		embed.addField('Author', `${message.author}`);
 		embed.addField('Channel', `${message.channel}`);
