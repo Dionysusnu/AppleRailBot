@@ -14,6 +14,7 @@ module.exports = {
 		console.log(filtered);
 		const embed = new RichEmbed();
 		embed.setTitle(filtered && filtered.executor.tag || message.author.tag);
+		embed.setURL(filtered && filtered.executor.avatarURL);
 		embed.setDescription('**Message deleted**');
 		embed.addField('Author', `${message.author}`);
 		embed.addField('Channel', `${message.channel}`);
