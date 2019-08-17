@@ -1,4 +1,4 @@
-import { RichEmbed } from 'discord.js';
+const { RichEmbed } = require('discord.js');
 
 export const name = 'messagedeleted';
 export const description = 'Can assign roles to people if they reply to a message with an emoji';
