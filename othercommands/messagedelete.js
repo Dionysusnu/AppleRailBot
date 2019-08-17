@@ -8,7 +8,7 @@ export const cooldown = 0;
 export const aliases = [''];
 export async function execute(message) {
 	const logs = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' });
-	const filtered = logs.entries.filter(log => log.target === message).first();
+	const filtered = logs.entries.filter(log => log.target === message.author && log.extra.channel === message.channel).first();
 	const embed = new RichEmbed();
 	embed.setTitle((filtered && filtered.avatarURL || message.author.avatarURL) + (filtered && filtered.tag || message.author.tag));
 	embed.setDescription('**Message deleted**');
