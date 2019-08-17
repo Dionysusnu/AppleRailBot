@@ -10,8 +10,7 @@ export async function execute(message) {
 	const logs = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' });
 	const filtered = logs.entries.filter(log => log.target === message).first();
 	const embed = new RichEmbed();
-	embed.setImage(message.author.avatarURL);
-	embed.setTitle(filtered && filtered.tag || message.author.tag);
+	embed.setTitle((filtered && filtered.avatarURL || message.author.avatarURL) + (filtered && filtered.tag || message.author.tag));
 	embed.setDescription('**Message deleted**');
 	embed.addField('Author', `${message.author}`);
 	embed.addField('Channel', `${message.channel}`);
