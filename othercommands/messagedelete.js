@@ -13,9 +13,8 @@ module.exports = {
 		const filtered = logs.entries.filter(log => log.target === message.author && log.extra.channel === message.channel).first();
 		console.log(filtered);
 		const embed = new RichEmbed();
-		embed.setTitle(filtered && filtered.executor.tag || message.author.tag);
-		embed.setURL(filtered && filtered.executor.avatarURL || message.author.avatarURL);
-		embed.setDescription('**Message deleted**');
+		embed.setAuthor(filtered && filtered.executor.tag || message.author.tag, filtered && filtered.executor.avatarURL || message.author.avatarURL);
+		embed.setTitle('**Message deleted**');
 		embed.addField('Author', `${message.author}`);
 		embed.addField('Channel', `${message.channel}`);
 		message.content && embed.addField('Content', message.content);
