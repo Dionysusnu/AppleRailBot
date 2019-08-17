@@ -18,5 +18,5 @@ module.exports = {
 		message.content && embed.addField('Content', message.content);
 		embed.attachFiles(message.attachments.array());
 		message.guild.channels.get(process.env.DISCORD_LOGS_ID).send('', embed);
-	}
-}
+	},
+};
