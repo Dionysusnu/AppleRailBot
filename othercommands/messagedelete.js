@@ -7,10 +7,13 @@ module.exports = {
 	args: false,
 	cooldown: 0,
 	aliases: [''],
-	async execute(message, db) {
+	async execute(message) {
 		const embed = new RichEmbed();
-		embed.setTitle('Message deleted');
-		embed.addField(message.author.tag, message.content || 'No text');
+		embed.setThumbnail(message.author.avatarURL);
+		embed.setTitle(message.author.tag);
+		embed.setDescription('Message deleted');
+		embed.addField('Channel', `${message.channel}`);
+		message.content && embed.addField('Content', message.content);
 		embed.attachFiles(message.attachments.array());
 		message.guild.channels.get(process.env.DISCORD_LOGS_ID).send('', embed);
 	},
