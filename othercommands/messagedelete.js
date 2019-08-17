@@ -8,10 +8,13 @@ module.exports = {
 	cooldown: 0,
 	aliases: [''],
 	async execute(message) {
+		const logs = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE' });
+		const filtered = logs.entries.filter(log => log.target === message).first();
 		const embed = new RichEmbed();
 		embed.setImage(message.author.avatarURL);
-		embed.setTitle(message.author.tag);
+		embed.setTitle(filtered && filtered.tag || message.author.tag);
 		embed.setDescription('**Message deleted**');
+		embed.addField('Author', `${message.author}`);
 		embed.addField('Channel', `${message.channel}`);
 		message.content && embed.addField('Content', message.content);
 		embed.attachFiles(message.attachments.array());
