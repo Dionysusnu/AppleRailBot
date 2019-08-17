@@ -9,9 +9,9 @@ module.exports = {
 	aliases: [''],
 	async execute(message) {
 		const embed = new RichEmbed();
-		embed.setThumbnail(message.author.avatarURL);
+		embed.setImage(message.author.avatarURL);
 		embed.setTitle(message.author.tag);
-		embed.setDescription('Message deleted');
+		embed.setDescription('**Message deleted**');
 		embed.addField('Channel', `${message.channel}`);
 		message.content && embed.addField('Content', message.content);
 		embed.attachFiles(message.attachments.array());
