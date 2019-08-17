@@ -18,6 +18,7 @@ module.exports = {
 		embed.addField('Author', `${message.author}`);
 		embed.addField('Channel', `${message.channel}`);
 		message.content && embed.addField('Content', message.content);
+		message.embeds.length && embed.addField('\u200B', 'Contained embed(s)');
 		embed.attachFiles(message.attachments.array());
 		embed.setTimestamp();
 		message.guild.channels.get(process.env.DISCORD_LOGS_ID).send('', embed);
