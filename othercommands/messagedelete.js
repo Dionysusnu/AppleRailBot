@@ -17,6 +17,7 @@ module.exports = {
 		embed.setTitle('**Message deleted**');
 		embed.addField('Author', `${message.author}`);
 		embed.addField('Channel', `${message.channel}`);
+		embed.addField('Message timestamp', message.createdTimestamp);
 		message.content && embed.addField('Content', message.content);
 		message.embeds.length && embed.addField('\u200B', 'Contained embed(s)');
 		embed.attachFiles(message.attachments.array());
