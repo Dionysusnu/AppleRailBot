@@ -5,7 +5,7 @@ module.exports = {
 	args: false,
 	cooldown: 0,
 	aliases: [''],
-	execute(guildmember, db) {
+	async execute(guildmember, db) {
 		const str = db.get('leavemessage');
 		const regex = new RegExp('&user', 'g');
 		// console.log(regex);
