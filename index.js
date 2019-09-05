@@ -44,7 +44,11 @@ client.on('ready', async () => {
 	console.log(date);
 	console.log(`Logged in as ${client.user.tag}!`);
 	dbchannel = client.channels.get(process.env.DATABASE_CHANNEL);
-	dbmessage = await dbchannel.fetchMessage(process.env.DATABASE_MESSAGE);
+	dbmessage = dbchannel && await dbchannel.fetchMessage(process.env.DATABASE_MESSAGE);
+	if (!dbmessage) {
+		console.error('Couldn\'t fetch database');
+		process.exit(1);
+	}
 });
 
 const db = {
