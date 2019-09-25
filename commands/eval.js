@@ -14,10 +14,10 @@ module.exports = {
 				maxMatches: 1,
 			});
 			collector.once('collect', msg => {
-				const regex = new RegExp('```js.+```', 's');
-				const result = msg.content.match(regex);
-				const string = result && result[0].slice(5, -3);
 				try {
+					const regex = new RegExp('```js.+```', 's');
+					const result = msg.content.match(regex);
+					const string = 'const guild = arguments[0]; const author = arguments[1];' + result[0].slice(5, -3);
 					message.reply(new Function(string)(message.guild, message.author));
 				} catch (error) {
 					message.reply(error);
