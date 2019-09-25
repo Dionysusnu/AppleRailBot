@@ -58,7 +58,7 @@ const db = {
 		}
 		let foundfield = false;
 		for (const field of dbmessage.embeds[0].fields) {
-			if (field.name == dbkey) {
+			if (field.name === dbkey) {
 				field.value = value;
 				foundfield = true;
 				break;
@@ -79,7 +79,7 @@ const db = {
 		// console.log(dbmessage.embeds[0]);
 		for (const field of dbmessage.embeds[0].fields) {
 			// console.log('comparing ' + field.name + ' to ' + dbkey);
-			if (field.name == dbkey) {
+			if (field.name === dbkey) {
 				return field.value;
 			}
 		}
@@ -90,7 +90,7 @@ const db = {
 			await editpromise;
 		}
 		const embed = new RichEmbed(dbmessage.embeds[0]);
-		embed.fields = embed.fields.filter(field => field.name != dbkey);
+		embed.fields = embed.fields.filter(field => field.name !== dbkey);
 		editpromise = dbmessage.edit('', embed);
 		await editpromise;
 		editpromise = null;
@@ -161,7 +161,7 @@ client.on('message', message => {
 	// find guildmember
 	const clientguildmember = message.guild.members.find(guildMember => guildMember.id === client.user.id);
 	const prefix = db.get('prefix');
-	if (!(message.content.startsWith(prefix) || message.mentions.members.first() == clientguildmember)) return;
+	if (!(message.content.startsWith(prefix) || message.mentions.members.first() === clientguildmember)) return;
 	// console.log(Clientguildmember);
 	// slice removes prefix, trim removes spaces in front and behind, then split on space(s) using regex
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -192,7 +192,7 @@ client.on('message', message => {
 	}
 	command.execute(message, args, db).catch(error => {
 		console.error(error);
-		if (message.author.id == process.env.OWNER_ID) {
+		if (message.author.id === process.env.OWNER_ID) {
 			message.channel.send('Error:```js ' + error + ' ```');
 		} else {
 			message.reply('there was an error trying to execute that command!');
