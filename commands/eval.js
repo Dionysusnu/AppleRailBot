@@ -16,7 +16,8 @@ module.exports = {
 			collector.once('collect', msg => {
 				const regex = new RegExp('```js.+```', 's');
 				const result = msg.content.match(regex);
-				message.reply(`${result && 'evaling'} ${result && result[0] || 'no code found'}`);
+				const string = result && result[0].slice(5, -3);
+				string && message.reply(new Function(string)()) || message.reply('no code found');
 			});
 			message.reply('waiting');
 		}
