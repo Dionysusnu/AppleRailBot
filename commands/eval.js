@@ -16,7 +16,7 @@ module.exports = {
 			collector.on('collect', msg => {
 				const regex = new RegExp('```js.+```', 's');
 				message.reply(regex);
-				message.reply(`evaling ${msg.match(regex)[0]}`);
+				message.reply(`evaling ${msg.content.match(regex)[0]}`);
 			});
 		}
 	},
