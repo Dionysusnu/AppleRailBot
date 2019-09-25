@@ -9,9 +9,7 @@ module.exports = {
 	aliases: [''],
 	async execute(message) {
 		const logs = await message.guild.fetchAuditLogs({ type: 'MESSAGE_DELETE', limit: 10 });
-		console.log(logs.entries);
 		const filtered = logs.entries.filter(log => log.target === message.author && log.extra.channel === message.channel).first();
-		console.log(filtered);
 		const embed = new RichEmbed();
 		embed.setAuthor(filtered && filtered.executor.tag || message.author.tag, filtered && filtered.executor.avatarURL || message.author.avatarURL);
 		embed.setTitle('**Message deleted**');
