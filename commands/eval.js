@@ -14,7 +14,9 @@ module.exports = {
 				maxMatches: 1,
 			});
 			collector.on('collect', msg => {
-				message.reply(`evaling ${msg}`);
+				const regex = new RegExp('```js.+```', 's');
+				message.reply(regex);
+				message.reply(`evaling ${msg.match(regex)[0]}`);
 			});
 		}
 	},
