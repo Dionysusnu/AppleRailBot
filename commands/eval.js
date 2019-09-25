@@ -18,9 +18,9 @@ module.exports = {
 					const regex = new RegExp('```js.+```', 's');
 					const result = msg.content.match(regex);
 					const string = 'const guild = arguments[0]; const author = arguments[1];' + result[0].slice(5, -3);
-					message.channel.send(new Function(string)(message.guild, message.author).toString() || 'no output');
+					message.channel.send(`\`\`\`${new Function(string)(message.guild, message.author)}\`\`\``);
 				} catch (error) {
-					message.channel.send(error.toString());
+					message.channel.send(`\`\`\`${error}\`\`\``);
 				}
 			});
 			message.channel.send('waiting');
