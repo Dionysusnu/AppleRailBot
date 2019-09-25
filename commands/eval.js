@@ -17,7 +17,11 @@ module.exports = {
 				const regex = new RegExp('```js.+```', 's');
 				const result = msg.content.match(regex);
 				const string = result && result[0].slice(5, -3);
-				string && message.reply(new Function(string)(message.guild, message.author)) || message.reply('no code found');
+				try {
+					message.reply(new Function(string)(message.guild, message.author));
+				} catch (error) {
+					message.reply(error);
+				}
 			});
 			message.reply('waiting');
 		}
