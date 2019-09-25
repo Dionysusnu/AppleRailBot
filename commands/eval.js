@@ -20,10 +20,10 @@ module.exports = {
 					const string = 'const guild = arguments[0]; const author = arguments[1];' + result[0].slice(5, -3);
 					message.channel.send(new Function(string)(message.guild, message.author).toString() || 'no output');
 				} catch (error) {
-					message.reply(error);
+					message.channel.send(error.toString());
 				}
 			});
-			message.reply('waiting');
+			message.channel.send('waiting');
 		}
 	},
 };
