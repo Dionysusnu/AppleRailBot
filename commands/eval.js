@@ -13,11 +13,12 @@ module.exports = {
 			const collector = new MessageCollector(message.channel, msg => msg.author.id === message.author.id, {
 				maxMatches: 1,
 			});
-			collector.on('collect', msg => {
+			collector.once('collect', msg => {
 				const regex = new RegExp('```js.+```', 's');
-				message.reply(regex);
-				message.reply(`evaling ${msg.content.match(regex)[0]}`);
+				const result = msg.content.match(regex);
+				message.reply(`${result && 'evaling'} ${result && result[0] || 'no code found'}`);
 			});
+			message.reply('waiting');
 		}
 	},
 };
