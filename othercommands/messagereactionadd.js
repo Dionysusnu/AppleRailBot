@@ -10,9 +10,9 @@ module.exports = {
 		const guildmember = messageReaction.message.guild.members.get(user.id);
 		const clientguildmember = messageReaction.message.guild.members.get(user.client.user.id);
 		const trackedmessages = db.get('trackedmessages');
-		if(!trackedmessages.includes(messageReaction.message.id)) return console.log('Message does not seem to be tracked');
+		if(!trackedmessages.includes(messageReaction.message.id)) return;
 		const trackedmessagereactions = db.get(`trackedmessages.${messageReaction.message.id}.reactions`);
-		if(!trackedmessagereactions.includes(messageReaction.emoji.id || messageReaction.emoji.name)) return console.log('Emoji not tracked');
+		if(!trackedmessagereactions.includes(messageReaction.emoji.id || messageReaction.emoji.name)) return;
 		const roletoassign = db.get(`trackedmessages.${messageReaction.message.id}.reactions.${messageReaction.emoji.id || messageReaction.emoji.name}`);
 		if(!clientguildmember.hasPermission('MANAGE_ROLES')) return console.error('Bot does not have permission to assign roles');
 		guildmember.addRole(roletoassign);
