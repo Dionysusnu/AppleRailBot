@@ -23,8 +23,14 @@ module.exports = {
 			for (const [id] of message.guild.roles.filter(role => role.id !== args[0])) {
 				promises.push(message.channel.overwritePermissions(id, disabled, 'hereping'));
 			}
+			promises.push(new Promise(resolve => {
+				setTimeout(resolve, 10000);
+			}));
 			await Promise.all(promises);
 			await message.channel.send('@here ^^');
+			await new Promise(resolve => {
+				setTimeout(resolve, 10000);
+			});
 			await message.channel.replacePermissionOverwrites({
 				overwrites: old,
 				reason: 'hereping',
