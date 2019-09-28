@@ -1,5 +1,8 @@
 const { Permissions } = require('discord.js');
-const disabled = Permissions.FLAGS;
+const disabled = {};
+Object.keys(Permissions.FLAGS).map(key => {
+	disabled[key] = false;
+});
 console.log(disabled);
 module.exports = {
 	name: 'rolehereping',
