@@ -1,3 +1,4 @@
+const { Permissions } = require('discord.js');
 const disabled = Permissions.FLAGS;
 console.log(disabled);
 module.exports = {
