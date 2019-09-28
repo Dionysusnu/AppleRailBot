@@ -3,7 +3,6 @@ const disabled = {};
 Object.keys(Permissions.FLAGS).map(key => {
 	disabled[key] = false;
 });
-console.log(disabled);
 module.exports = {
 	name: 'rolehereping',
 	description: 'pings a specific role with `@here`',
@@ -18,14 +17,15 @@ module.exports = {
 		} else {
 			const old = message.channel.permissionOverwrites.filter(perm => perm.allow !== 0 && perm.deny !== 0);
 			const promises = [];
-			for (const [id] of message.guild.roles) {
+			for (const [id] of message.guild.roles.filter(role => role.id !== args[0])) {
 				promises.push(message.channel.overwritePermissions(id, disabled, 'hereping'));
 			}
 			await Promise.all(promises);
 			await message.channel.send('@here ^^');
-			for (const [id, oldPerms] of old) {
-				message.channel.overwritePermissions(id, oldPerms);
-			}
+			await message.channel.replacePermissionOverwrites({
+				overwrites: old,
+				reason: 'hereping',
+			});
 		}
 	},
 };
