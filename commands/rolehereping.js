@@ -12,7 +12,10 @@ module.exports = {
 	cannotDisable: false,
 	aliases: ['rolepinghere'],
 	async execute(message, args) {
-		if (!message.guild.roles.has(args[0])) {
+		// 131072 is mention everyone
+		if (!message.channel.memberPermissions(message.member).has(131072)) {
+			return message.channel.send('Invalid permissions');
+		} else if (!message.guild.roles.has(args[0])) {
 			return message.channel.send('Invalid role');
 		} else {
 			const old = message.channel.permissionOverwrites.clone();
