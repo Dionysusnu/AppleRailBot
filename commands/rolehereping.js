@@ -13,7 +13,7 @@ module.exports = {
 		if (!message.guild.roles.has(args[0])) {
 			return message.channel.send('Invalid role');
 		} else {
-			const old = message.channel.permissionOverwrites;
+			const old = message.channel.permissionOverwrites.filter(perm => perm.allow !== 0 && perm.deny !== 0);
 			const promises = [];
 			for (const [id] of message.guild.roles) {
 				promises.push(message.channel.overwritePermissions(id, disabled, 'hereping'));
