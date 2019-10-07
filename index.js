@@ -200,35 +200,35 @@ client.on('message', message => {
 	});
 });
 
-client.on('guildMemberRemove', async guildmember => {
+client.on('guildMemberRemove', guildmember => {
 	const command = client.othercommands.get('guildmemberleft');
 	command.execute(guildmember, db).catch(console.error);
 });
 
-client.on('guildMemberAdd', async guildmember => {
+client.on('guildMemberAdd', guildmember => {
 	const command = client.othercommands.get('guildmemberadded');
 	command.execute(guildmember, db).catch(console.error);
 });
 
-client.on('messageReactionAdd', async (messageReaction, user) => {
+client.on('messageReactionAdd', (messageReaction, user) => {
 	const command = client.othercommands.get('messagereactionadded');
 	// console.log(command);
 	command.execute(messageReaction, user, db).catch(console.error);
 });
 
-client.on('messageReactionRemove', async (messageReaction, user) => {
+client.on('messageReactionRemove', (messageReaction, user) => {
 	const command = client.othercommands.get('messagereactionremoved');
 	// console.log(command);
 	command.execute(messageReaction, user, db).catch(console.error);
 });
 
-client.on('messageDelete', async message => {
+client.on('messageDelete', message => {
 	const command = client.othercommands.get('messagedeleted');
 	// console.log(command);
 	command.execute(message, db).catch(console.error);
 });
 
-client.on('error', async error => {
+client.on('error', error => {
 	console.error(new Date() + ': error');
 	console.error(error.message);
 });
