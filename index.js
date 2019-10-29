@@ -100,7 +100,9 @@ const db = {
 
 // start - messageReaction
 client.on('raw', async event => {
-	if (!Object.prototype.hasOwnProperty.call(events, event.t)) return;
+	if (!Object.prototype.hasOwnProperty.call(events, event.t)) {
+		return;
+	}
 	// console.log('raw event');
 
 	const { d: data } = event;
@@ -110,7 +112,7 @@ client.on('raw', async event => {
 	// if (channel.messages.has(data.message_id)) return;
 
 	const message = await channel.fetchMessage(data.message_id);
-	const emojiKey = (data.emoji.id) ? `${data.emoji.name}:${data.emoji.id}` : data.emoji.name;
+	const emojiKey = data.emoji.id ? `${data.emoji.name}:${data.emoji.id}` : data.emoji.name;
 	let reaction = message.reactions.get(emojiKey);
 
 	if (!reaction) {
@@ -161,7 +163,9 @@ client.on('message', message => {
 	// find guildmember
 	const clientguildmember = message.guild.members.find(guildMember => guildMember.id === client.user.id);
 	const prefix = db.get('prefix');
-	if (!(message.content.startsWith(prefix) || message.mentions.members.first() === clientguildmember)) return;
+	if (!(message.content.startsWith(prefix) || message.mentions.members.first() === clientguildmember)) {
+		return;
+	}
 	// console.log(Clientguildmember);
 	// slice removes prefix, trim removes spaces in front and behind, then split on space(s) using regex
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);
