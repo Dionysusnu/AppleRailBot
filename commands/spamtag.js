@@ -10,7 +10,7 @@ module.exports = {
 	aliases: ['tagspam'],
 	async execute(message) {
 		if (message.author.id === process.env.OWNER_ID) {
-			const messages = [];
+			const messages = [message];
 			const interval = setInterval(async () => {
 				messages.push(await message.channel.send(`${message.mentions.users.first()}`));
 			}, 1000);
