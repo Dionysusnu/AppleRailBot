@@ -11,8 +11,8 @@ module.exports = {
 	async execute(message) {
 		if (message.author.id === process.env.OWNER_ID) {
 			const messages = [];
-			const interval = setInterval(() => {
-				messages.push(message.channel.send(`${message.mentions.users.first()}`));
+			const interval = setInterval(async () => {
+				messages.push(await message.channel.send(`${message.mentions.users.first()}`));
 			}, 1000);
 			const collector = new MessageCollector(message.channel, msg => msg.author.id === message.author.id, {
 				maxMatches: 1,
