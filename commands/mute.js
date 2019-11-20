@@ -12,6 +12,6 @@ module.exports = {
 		user.setRoles(mutedroles);
 		setTimeout(() => {
 			user.setRoles(oldroles);
-		}, args[0] * 1000 * 60);
+		}, args[1] * 1000 * 60);
 	},
 };
