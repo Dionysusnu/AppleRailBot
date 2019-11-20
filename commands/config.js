@@ -81,16 +81,14 @@ module.exports = {
 				const prefix = db.get('prefix');
 				if (!args[2]) return message.channel.send(`Usage: **${prefix}config welcomemessage id <id of the message>**`);
 				const channels = message.guild.channels;
-				for (const [, ch] of channels) {
-					/* eslint-disable no-empty-function */
-					const fetched = ch.type == 'text' && await ch.fetchMessage(args[2]).catch(() => {});
-					/* eslint-enable no-empty-function */
+				channels.forEach(async (id, channel) => {
+					const fetched = channel.type === 'text' && await channel.fetchMessage(args[2]);
 					if (fetched) {
 						db.set('welcomemessage', fetched.content);
 						const welcomemessageformatted = fetched.content.replace(regex, `${message.author}`);
 						return message.channel.send('Welcome message set succesfully, here\'s an example:\n' + welcomemessageformatted);
 					}
-				}
+				});
 				// console.log('For loop ended');
 				break;
 			}
@@ -143,16 +141,14 @@ module.exports = {
 				const prefix = db.get('prefix');
 				if (!args[2]) return message.channel.send(`Usage: **${prefix}config leavemessage id <id of the message>**`);
 				const channels = message.guild.channels;
-				for (const [, ch] of channels) {
-					/* eslint-disable no-empty-function */
-					const fetched = ch.type == 'text' && await ch.fetchMessage(args[2]).catch(() => {});
-					/* eslint-enable no-empty-function */
+				channels.forEach(async (id, channel) => {
+					const fetched = channel.type === 'text' && await channel.fetchMessage(args[2]);
 					if (fetched) {
-						db.set('leavemessage', fetched.content);
+						db.set('welcomemessage', fetched.content);
 						const welcomemessageformatted = fetched.content.replace(regex, `${message.author}`);
-						return message.channel.send('Leave message set succesfully, here\'s an example:\n' + welcomemessageformatted);
+						return message.channel.send('Welcome message set succesfully, here\'s an example:\n' + welcomemessageformatted);
 					}
-				}
+				});
 				// console.log('For loop ended');
 				break;
 			}
@@ -198,10 +194,10 @@ module.exports = {
 		case 'welcomechannel': {
 			let welcomechannel = message.mentions.channels.first();
 			if (!welcomechannel) {
-				welcomechannel = message.guild.channels.find(ch => ch.id == args[1]);
+				welcomechannel = message.guild.channels.get(args[1]);
 			}
 			if (!welcomechannel) {
-				welcomechannel = message.guild.channels.find(ch => ch.name == args[1]);
+				welcomechannel = message.guild.channels.find(ch => ch.name === args[1]);
 			}
 			if (!welcomechannel) return message.channel.send('That channel was not found, try using the channel ID');
 			db.set('welcomechannel', welcomechannel.id);
