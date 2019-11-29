@@ -22,8 +22,8 @@ for (const file of otherCommandFiles) {
 }
 
 const envs = require('./env.json');
-for (const [key, value] in envs) {
-	process.env[key] = value;
+for (const key in envs) {
+	process.env[key] = envs[key];
 }
 
 const events = {
