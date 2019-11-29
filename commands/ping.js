@@ -6,10 +6,8 @@ module.exports = {
 	cooldown: 5,
 	cannotDisable: false,
 	async execute(message) {
-		message.channel.send('Pong!')
-			.then(msg => {
-				msg.edit('Pong! ' + (parseInt(msg.createdTimestamp) - parseInt(message.createdTimestamp)) + 'ms');
-			});
+		const msg = await message.channel.send('Pong!');
+		msg.edit('Pong! ' + (parseInt(msg.createdTimestamp) - parseInt(message.createdTimestamp)) + 'ms');
 		// or message.reply('pong') to add mention to message author
 	},
 };
