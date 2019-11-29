@@ -21,6 +21,10 @@ for (const file of otherCommandFiles) {
 	client.othercommands.set(command.name, command);
 }
 
+for (const [key, value] of require('./env.json')) {
+	process.env[key] = value;
+}
+
 const events = {
 	MESSAGE_REACTION_ADD: 'messageReactionAdd',
 	MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
