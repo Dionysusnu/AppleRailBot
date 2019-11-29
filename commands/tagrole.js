@@ -14,10 +14,13 @@ module.exports = {
 	cooldown: 5,
 	cannotDisable: false,
 	async execute(message, args) {
-		const role = message.guild.roles.get(roles.get(args[0].toLowerCase()));
-		const mentionable = role.mentionable;
-		mentionable || await role.setMentionable(true, 'tag');
-		await message.channel.send(`^^ ${role}`);
-		await role.setMentionable(mentionable, 'after tag');
+		if (message.member.hasPermission('MENTION_EVERYONE')) {
+			const role = message.guild.roles.get(roles.get(args[0].toLowerCase()));
+			const mentionable = role.mentionable;
+			await message.delete();
+			mentionable || await role.setMentionable(true, 'tag');
+			await message.channel.send(`^^ ${role}`);
+			await role.setMentionable(mentionable, 'after tag');
+		}
 	},
 };
