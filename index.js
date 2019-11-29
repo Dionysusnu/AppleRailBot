@@ -21,7 +21,8 @@ for (const file of otherCommandFiles) {
 	client.othercommands.set(command.name, command);
 }
 
-for (const [key, value] of require('./env.json')) {
+const envs = require('./env.json');
+for (const [key, value] in envs) {
 	process.env[key] = value;
 }
 
